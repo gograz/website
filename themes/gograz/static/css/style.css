@@ -1,43 +1,47 @@
-@charset "UTF-8";
+@import url("http://fonts.googleapis.com/css?family=Roboto:400,400italic,700");
 
 body {
-  width: 60%;
-  margin: auto;
+    font-family: "Roboto";
+    font-size:62.5%;
+    margin: 0;
+    padding: 0;
 }
 
-.post {
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 10px;
+h1 {
+    margin-bottom: 4rem;
+    color: #375EAB;
 }
 
-.post-meta {
-  display: none;
+a {
+    color: #375EAB;
 }
 
-.post-title {
-  background-color: #8CC5E7;
-  padding: 0 5px;
-  text-align: center;
-  color: white;
-  font-variant: small-caps;
+#layout.node > header {
+    background: #E0EBF5;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
-.post-summary {
-  margin-bottom: 20px;
+#layout.node > header > h1 {
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    font-size: 3rem;
 }
 
-.post-summary-text {
-  text-indent: 2em;
+#layout.node > .content {
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
 }
 
-.post-reading-time {
-  font-style: italic;
+.content {
+    font-size: 1.4rem;
+    line-height: 2.2rem;
 }
-
 
 footer {
-  font-family: monospace;
-  text-align: center;
-  margin: 10px 0;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.1rem;
 }
