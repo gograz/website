@@ -1,0 +1,9 @@
+name = "gograz"
+description = "Hugo theme for the gograz user community website"
+license = "Public Domain"
+source_repo = "https://github.com/gograz/website"
+tags = ["community", "gophers"]
+
+[author]
+    name = "meisterluk"
+    url = "http://github.com/meisterluk"

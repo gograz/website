@@ -1,0 +1,52 @@
+{{ partial "header.html" . }}
+  <body>
+    <h1>gograz community</h1>
+    <div id="layout">
+{{ partial "sidebar.html" . }}
+
+      <div class="posts">
+        {{ range .Site.Recent }}
+        <section class="post">
+          <header class="post-header">
+            <h2 class="post-title">{{ .Title }}</h2>
+          </header>
+
+          <p class="post-meta">
+            <!--
+              {{ if not .Params.nodate }}
+              <span class="post-date">
+                <span class="post-date-day"><sup>{{ .Date.Format "2" }}</sup></span><span class="post-date-separator">/</span><span class="post-date-month">{{ .Date.Format "Jan" }}</span> <span class="post-date-year">{{ .Date.Format "2006" }}</span>
+              </span>
+              {{ end }}
+            -->
+            {{ if .Params.author }}By <a class="post-author" {{ if .Params.authorlink }}href="{{ .Params.authorlink }}"{{ end }}>{{ .Params.author }}</a>{{ end }}
+            {{ if not .Params.noread }}
+              <span class="post-reading-time">{{.ReadingTime}} min. read</span>
+            {{ end }}
+            {{ if .Params.categories }}
+            <div class="post-categories">
+              {{ range .Params.categories }}
+                <a class="post-category post-category-{{ . | urlize }}" href="/categories/{{ . | urlize }}">{{ . }}</a> 
+              {{ end }}
+            </div>
+          {{ end }}
+          </p>
+
+          <article class="post-summary">
+            <h3>Article: {{ .Title }}</h3>
+            <div class="post-summary-text">
+              {{ .Summary }}
+            </div>
+          </article>
+          <div class="read-more-link">
+            <a href="{{ .RelPermalink }}">→ Read More …</a>
+          </div>
+        </section>
+        {{ end }}
+      </div>
+
+{{ partial "footer.html" . }}
+
+    </div>
+  </body>
+</html>

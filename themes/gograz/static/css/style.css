@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+body {
+  width: 60%;
+  margin: auto;
+}
+
+.post {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.post-meta {
+  display: none;
+}
+
+.post-title {
+  background-color: #8CC5E7;
+  padding: 0 5px;
+  text-align: center;
+  color: white;
+  font-variant: small-caps;
+}
+
+.post-summary {
+  margin-bottom: 20px;
+}
+
+.post-summary-text {
+  text-indent: 2em;
+}
+
+.post-reading-time {
+  font-style: italic;
+}
+
+
+footer {
+  font-family: monospace;
+  text-align: center;
+  margin: 10px 0;
+}
