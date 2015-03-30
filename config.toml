@@ -1,3 +1,4 @@
 baseurl = "http://gograz.org"
 languageCode = "en-us"
 title = "Go User Group Graz"
+theme = "gograz"

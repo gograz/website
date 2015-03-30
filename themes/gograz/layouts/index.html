@@ -1,5 +1,5 @@
 {{ partial "header.html" . }}
-<header><h1>Welcome to GoGraz</h1></header>
+<header><h1><a href="/">Welcome to GoGraz</a></h1></header>
 <div class="content">
   <p id="mission">GoGraz is a user group for the <a href="http://golang.org/"
   rel="external">Go programming language</a> in Graz. We meet every 3rd Tuesday
@@ -10,5 +10,16 @@
   <p>You can also find us
   on <a href="https://plus.google.com/communities/106198408392520934164"
   rel="external">Google+</a>!</p>
+
+  {{ if where .Site.Pages "Section" "meetup" }}
+  <section>
+    <h2>Meetups</h2>
+    <ul>
+    {{ range where .Site.Pages "Section" "meetup" }}
+    {{ .Render "listing" }}
+    {{ end }}
+    </ul>
+  </section>
+  {{ end }}
 </div>
 {{ partial "footer.html" . }}

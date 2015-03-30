@@ -1,0 +1,29 @@
+{{ partial "header.html" }}
+{{ partial "topnav.html" }}
+<div id="content">
+    <article>
+        <header>
+            <h1>{{ .Title }}</h1>
+        </header>
+        <aside>
+            {{ if .Params.location }}
+            <dl class="location">
+                <dt>Where?</dt>
+                <dd>
+                {{ .Params.location }}{{ if .Params.address }} ({{ .Params.address }}){{ end }}
+                </dd>
+            </dl>
+            {{ end }}
+            {{ if .Date }}
+            <dl class="datetime">
+                <dt>When?</dt>
+                <dd>{{ dateFormat "Monday, 2 January 2006 at 15:04 MST" .Date }}</dd>
+            </dl>
+            {{ end }}
+        </aside>
+        <div class="content">
+            {{ .Content }}
+        </div>
+    </article>
+</div>
+{{ partial "footer.html" }}

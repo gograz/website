@@ -16,20 +16,35 @@ a {
     color: #375EAB;
 }
 
-#layout.node > header {
+#layout > header {
     background: #E0EBF5;
     padding: 10px;
     margin-bottom: 20px;
 }
 
-#layout.node > header > h1 {
+#layout > header i {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#layout > header a {
+    text-decoration: none;
+}
+
+#layout > header a:hover {
+    text-decoration: underline;
+}
+
+#layout > header > h1 {
     width: 80%;
     max-width: 600px;
     margin: auto;
     font-size: 3rem;
 }
 
-#layout.node > .content {
+#layout.node > .content,
+#layout > #content {
     width: 80%;
     max-width: 600px;
     margin: auto;
@@ -40,8 +55,49 @@ a {
     line-height: 2.2rem;
 }
 
+#content h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    line-height: 2.6rem;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.6rem;
+    color: #375EAB;
+    margin-bottom: 0;
+}
+
+ul {
+    margin: 0.5rem 0rem;
+}
+
 footer {
     text-align: center;
     margin: 10px 0;
     font-size: 1.1rem;
+}
+
+aside {
+    background: #EFEFEF;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+aside dl {
+    margin: 0.5rem 0 0 0;
+}
+
+aside dl:first-child {
+    margin: 0;
+}
+
+aside dt, aside dd {
+    display: inline-block;
+}
+
+aside dt {
+    font-weight: bold;
+    min-width: 5em;
 }
