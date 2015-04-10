@@ -1,1 +1,4 @@
 public
+*.css
+themes/gograz/static/css
+node_modules

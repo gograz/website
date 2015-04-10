@@ -4,7 +4,8 @@
     <title>Go User Group Graz</title>
 {{ partial "meta.html" . }}
 
-    <link rel="stylesheet" href="/css/style.css">
+    {{ $cssManifest := getJson "themes/gograz/static/css/rev-manifest.json" }}
+    <link rel="stylesheet" href="/css/{{ index $cssManifest "style.css"}}">
   </head>
   <body>
     <div id="layout" class="{{ if .IsNode }}node{{ end }}">
