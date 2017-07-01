@@ -106,8 +106,19 @@ aside dt {
 }
 
 aside dd {
-    width: 70%;
+    width: 68%;
     margin: 0;
+    float: right;
+}
+
+@media screen and (max-width: 500px) {
+    aside dd, aside dt {
+        width: 100%;
+        float: none;
+    }
+    aside dl {
+        margin-top: 1rem;
+    }
 }
 
 .member {
