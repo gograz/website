@@ -86,6 +86,8 @@ aside {
 }
 
 aside dl {
+    overflow: hidden;
+    width: 100%;
     margin: 0.5rem 0 0 0;
 }
 
@@ -94,10 +96,31 @@ aside dl:first-child {
 }
 
 aside dt, aside dd {
-    display: inline-block;
+    display: block;
+    float: left;
 }
 
 aside dt {
     font-weight: bold;
-    min-width: 5em;
+    width: 30%;
+}
+
+aside dd {
+    width: 70%;
+    margin: 0;
+}
+
+.member {
+    display: inline-block;
+    line-height: 40px;
+    margin-right: 2px;
+    border: 1px solid #375EAB;
+    padding: 2px;
+
+    img {
+        display: block;
+        max-width: 40px;
+        max-height: 40px;
+        line-height: 40px;
+    }
 }

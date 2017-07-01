@@ -20,10 +20,20 @@
                 <dd>{{ dateFormat "Monday, 2 January 2006 at 15:04 MST" .Date }}</dd>
             </dl>
             {{ end }}
+            {{ if .Params.MeetupID }}
+            <dl class="rsvps">
+                <dt>Who's coming?</dt>
+                <dd id="posRSVPs"></dd>
+            </dl>
+            {{ end }}
         </aside>
         <div class="content">
             {{ .Content }}
         </div>
     </article>
 </div>
+{{ if .Params.MeetupID }}
+    <script>var MEETUP_ID = "{{ .Params.MeetupID }}";</script>
+    <script src="/js/meetup-rsvps.js"></script>
+{{ end }}
 {{ partial "footer.html" }}
