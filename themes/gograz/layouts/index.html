@@ -16,7 +16,7 @@
   <section>
     <h2>Meetups</h2>
     <ul>
-    {{ range where .Site.Pages "Section" "meetup" }}
+    {{ range where (where .Site.Pages "Section" "meetup") "IsPage" true }}
     {{ .Render "listing" }}
     {{ end }}
     </ul>
