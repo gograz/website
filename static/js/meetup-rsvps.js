@@ -15,6 +15,9 @@
             link.setAttribute('href', 'https://www.meetup.com/Graz-Open-Source-Meetup/members/' + member.id);
             link.setAttribute('title', member.name);
             var img = document.createElement('img');
+            if (!member.thumbLink) {
+                member.thumbLink = '/images/gopher.png';
+            }
             img.setAttribute('src', member.thumbLink);
             img.setAttribute('alt', member.name);
             link.appendChild(img);
