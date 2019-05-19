@@ -33,6 +33,7 @@
     </article>
 </div>
 {{ if .Params.MeetupID }}
-    <script src="/js/meetup-rsvps.js"></script>
+    {{ $js := resources.Get "js/meetup-rsvps.js" | minify | fingerprint }}
+    <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 {{ end }}
 {{ partial "footer.html" }}

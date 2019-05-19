@@ -6,8 +6,8 @@
     <title>Go User Group Graz</title>
 {{ partial "meta.html" . }}
 
-    {{ $cssManifest := getJSON "themes/gograz/static/css/rev-manifest.json" }}
-    <link rel="stylesheet" href="/css/{{ index $cssManifest "style.css"}}">
+    {{ $style := resources.Get "sass/style.scss" | toCSS | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
   </head>
   <body>
     <div id="layout" class="{{ if .IsNode }}node{{ end }}">
