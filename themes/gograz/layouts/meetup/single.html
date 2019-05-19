@@ -23,7 +23,7 @@
             {{ if .Params.MeetupID }}
             <dl class="rsvps">
                 <dt>Who's coming?</dt>
-                <dd id="posRSVPs"></dd>
+                <dd id="posRSVPs" data-meetup-id="{{ .Params.MeetupID }}"></dd>
             </dl>
             {{ end }}
         </aside>
@@ -33,7 +33,6 @@
     </article>
 </div>
 {{ if .Params.MeetupID }}
-    <script>var MEETUP_ID = "{{ .Params.MeetupID }}";</script>
     <script src="/js/meetup-rsvps.js"></script>
 {{ end }}
 {{ partial "footer.html" }}
