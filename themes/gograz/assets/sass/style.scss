@@ -18,7 +18,7 @@ a {
 
 #layout > header {
     background: #E0EBF5;
-    padding: 10px;
+    padding-top: 10px;
     margin-bottom: 20px;
 }
 
@@ -30,6 +30,8 @@ a {
 
 #layout > header a {
     text-decoration: none;
+    padding: 10px 0;
+    display: block;
 }
 
 #layout > header a:hover {
@@ -37,10 +39,12 @@ a {
 }
 
 #layout > header > h1 {
-    width: 80%;
-    max-width: 600px;
+    max-width: 510px;
     margin: auto;
     font-size: 3rem;
+    background: url("/images/gograz-logo.png") 0% 50% no-repeat;
+    padding-left: 90px;
+    background-size: contain;
 }
 
 #layout.node > .content,
