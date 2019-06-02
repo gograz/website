@@ -116,6 +116,10 @@ aside dd {
 }
 
 @media screen and (max-width: 500px) {
+    #layout > header > h1 {
+        background: none;
+        padding: 0 10px;
+    }
     aside dd, aside dt {
         width: 100%;
         float: none;
