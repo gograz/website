@@ -30,8 +30,12 @@
         <div class="content">
             {{ .Content }}
         </div>
-        <div class="webmentions-container" data-url="https://gograz.org{{ .RelPermalink}}" data-endpoint="https://gograz.org/webmentions" data-rsvp-summary="yes"></div>
+        <div class="webmentions-container" data-target="https://gograz.org{{ .RelPermalink}}" data-endpoint="https://gograz.org/webmentions" data-rsvp-summary="yes" data-title="Mentions from around the web..."></div>
         <script type="text/javascript" src="https://gograz.org/webmentions/ui/dist/widget.js"></script>
+
+        <div class="content help">
+            <p>This page supports <a href="https://webmention.net/">Webmentions</a>. Please not that they are moderated and don't show up right away.</p>
+        </div>
     </article>
 </div>
 {{ if .Params.MeetupID }}

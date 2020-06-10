@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400italic,700");
+$title_fg: #375EAB;
 
 body {
     font-family: "Roboto";
@@ -9,11 +10,11 @@ body {
 
 h1 {
     margin-bottom: 4rem;
-    color: #375EAB;
+    color: $title_fg;
 }
 
 a {
-    color: #375EAB;
+    color: $title_fg;
 }
 
 #layout > header {
@@ -145,7 +146,6 @@ aside dd {
 }
 
 .webmention-widget {
-    text-align: center;
     font-size: 1.0rem;
     line-height: 2.0rem;
 
@@ -153,12 +153,33 @@ aside dd {
         font-size: 1.4rem;
         text-align: center;
         margin-bottom: 0;
+        color: $title_fg;
     }
+}
+
+.webmention__date {
+    font-size: 0.8rem;
+    line-height: 2.2rem;
+    opacity: 0.6;
 }
 
 .rsvp-summary__groups {
     display: grid;
     grid-template-areas: "yes maybe no";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+.rsvp-summary__group__title {
+    margin: 0;
+    text-align: center;
+}
+.rsvp-summary__group__items {
+    margin: 0;
+}
+
+.rsvp-summary__group {
+    padding: 5px;
+    background: #EFEFEF;
 }
 
 .rsvp-summary__group:nth-child(1) {
@@ -169,4 +190,11 @@ aside dd {
 }
 .rsvp-summary__group:nth-child(3) {
     grid-area: no;
+}
+
+.help {
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.6rem;
+    margin: 1.4rem 0;
 }
