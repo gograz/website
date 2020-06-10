@@ -8,6 +8,7 @@
 
     {{ $style := resources.Get "sass/style.scss" | toCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
+    <link rel="webmention" href="https://gograz.org/webmentions/receive">
   </head>
   <body>
     <div id="layout" class="{{ if .IsNode }}node{{ end }}">

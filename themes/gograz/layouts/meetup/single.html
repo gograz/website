@@ -30,6 +30,8 @@
         <div class="content">
             {{ .Content }}
         </div>
+        <div class="webmentions-container" data-url="https://gograz.org{{ .RelPermalink}}" data-endpoint="https://gograz.org/webmentions" data-rsvp-summary="yes"></div>
+        <script type="text/javascript" src="https://gograz.org/webmentions/ui/dist/widget.js"></script>
     </article>
 </div>
 {{ if .Params.MeetupID }}

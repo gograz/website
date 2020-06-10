@@ -143,3 +143,30 @@ aside dd {
         line-height: 40px;
     }
 }
+
+.webmention-widget {
+    text-align: center;
+    font-size: 1.0rem;
+    line-height: 2.0rem;
+
+    h3 {
+        font-size: 1.4rem;
+        text-align: center;
+        margin-bottom: 0;
+    }
+}
+
+.rsvp-summary__groups {
+    display: grid;
+    grid-template-areas: "yes maybe no";
+}
+
+.rsvp-summary__group:nth-child(1) {
+    grid-area: yes;
+}
+.rsvp-summary__group:nth-child(2) {
+    grid-area: maybe;
+}
+.rsvp-summary__group:nth-child(3) {
+    grid-area: no;
+}
