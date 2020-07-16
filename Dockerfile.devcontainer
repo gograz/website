@@ -1,0 +1,17 @@
+FROM ubuntu:latest
+
+ARG HUGO_VERSION=0.74.1
+ARG HUGO_VARIANT=hugo_extended
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN apt-get update && apt-get install -y sudo curl && \
+    curl -L -o /tmp/hugo.tar.gz https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_VARIANT}_${HUGO_VERSION}_Linux-64bit.tar.gz && \
+    mkdir /tmp/hugo && cd /tmp/hugo && tar -xzf ../hugo.tar.gz && mv hugo /usr/local/bin/ && cd / && rm -rf /tmp/hugo*
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+USER $USERNAME
