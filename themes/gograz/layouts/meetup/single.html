@@ -36,10 +36,20 @@
         <div class="content help">
             <p>This page supports <a href="https://webmention.net/">Webmentions</a>. Please note that they are moderated and don't show up right away.</p>
         </div>
+        {{ if .Params.mastodonStatus }}
+        <div class="retoots-container">
+            <h2>Comments:</h2>
+            <div class="retoots_help"><p>Leave a comment by replying to <a href="{{ .Params.mastodonStatus }}">this toot on Mastodon</a>!</p></div>
+        {{ end }}
+        </div>
     </article>
 </div>
 {{ if .Params.MeetupID }}
     {{ $js := resources.Get "js/meetup-rsvps.js" | minify | fingerprint }}
+    <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{ end }}
+{{ if .Params.mastodonStatus }}
+    {{ $js := resources.Get "js/retoots.js" | minify | fingerprint }}
     <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 {{ end }}
 {{ partial "footer.html" }}
