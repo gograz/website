@@ -1,0 +1,12 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Go User Group Graz</title>
+    <meta name="description" content="{{ .Description }}">
+    <meta name="keywords" content="{{ delimit .Keywords ", " ", " }}">
+    <meta name="author" content="{{ .Params.author }}">
+    {{- $style := resources.Get "sass/style.scss" | toCSS | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
+    <link rel="webmention" href="https://gograz.org/webmentions/receive">
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
+</head>

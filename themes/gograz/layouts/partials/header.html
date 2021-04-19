@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <title>Go User Group Graz</title>
-{{ partial "meta.html" . }}
-
-    {{ $style := resources.Get "sass/style.scss" | toCSS | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
-    <link rel="webmention" href="https://gograz.org/webmentions/receive">
-    <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
-  </head>
-  <body>
-    <div id="layout" class="{{ if .IsNode }}node{{ end }}">
+<header>
+    {{- if .IsNode }}
+    <h1><a href="/">Welcome to GoGraz</a></h1>
+    {{ else }}
+    <h1><a href="/">GoGraz
+            <i>Go User Group Graz</i></a></h1>
+    {{ end -}}
+</header>

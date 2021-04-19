@@ -1,27 +1,27 @@
-{{ partial "header.html" . }}
-<header><h1><a href="/">Welcome to GoGraz</a></h1></header>
+{{ define "main" }}
 <div class="content">
-  <p id="mission">GoGraz is a user group for the <a href="http://golang.org/"
-  rel="external">Go programming language</a> in Graz. We meet every 3rd Monday
-  of the month usually at <a href="https://www.tao-digital.at/" rel="external">TAO Digital</a> to
-  discuss various topics related to Go and other relevant areas. No registration
-    required! Just come and have fun!</p>
+    <p id="mission">GoGraz is a user group for the <a href="http://golang.org/"
+                                                      rel="external">Go programming language</a> in Graz. We meet every
+        3rd Monday
+        of the month usually at <a href="https://www.tao-digital.at/" rel="external">TAO Digital</a> to
+        discuss various topics related to Go and other relevant areas. No registration
+        required! Just come and have fun!</p>
 
-  <p>You can also find us
-      on <a href="http://www.meetup.com/Graz-Open-Source-Meetup/" rel="external">Meetup.com</a>, 
-      <a href="https://twitter.com/grazgophers" rel="external">Twitter</a>, and
-      <a href="https://chaos.social/@gograz" rel="external">Mastodon</a>!
-  </p>
+    <p>You can also find us
+        on <a href="http://www.meetup.com/Graz-Open-Source-Meetup/" rel="external">Meetup.com</a>,
+        <a href="https://twitter.com/grazgophers" rel="external">Twitter</a>, and
+        <a href="https://chaos.social/@gograz" rel="external">Mastodon</a>!
+    </p>
 
-  {{ if where .Site.Pages "Section" "meetup" }}
-  <section>
-    <h2>Meetups</h2>
-    <ul>
-    {{ range where (where .Site.Pages "Section" "meetup") "IsPage" true }}
-    {{ .Render "listing" }}
+    {{ if where .Site.Pages "Section" "meetup" }}
+    <section>
+        <h2>Meetups</h2>
+        <ul>
+            {{- range where (where .Site.Pages "Section" "meetup") "IsPage" true }}
+            {{- .Render "listing" -}}
+            {{ end -}}
+        </ul>
+    </section>
     {{ end }}
-    </ul>
-  </section>
-  {{ end }}
 </div>
-{{ partial "footer.html" . }}
+{{ end }}
