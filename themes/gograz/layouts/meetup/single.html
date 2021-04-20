@@ -1,5 +1,4 @@
-{{ partial "header.html" }}
-{{ partial "topnav.html" }}
+{{ define "main" }}
 <div id="content">
     <article>
         <header>
@@ -31,7 +30,7 @@
             {{ .Content }}
         </div>
         <div class="webmentions-container" data-target="https://gograz.org{{ .RelPermalink}}" data-endpoint="https://gograz.org/webmentions" data-rsvp-summary="yes" data-title="Mentions from around the web..."></div>
-        <script type="text/javascript" src="https://gograz.org/webmentions/ui/dist/widget.js"></script>
+        <script src="https://gograz.org/webmentions/ui/dist/widget.js"></script>
 
         <div class="content help">
             <p>This page supports <a href="https://webmention.net/">Webmentions</a>. Please note that they are moderated and don't show up right away.</p>
@@ -40,16 +39,18 @@
         <div class="retoots-container">
             <h2>Comments:</h2>
             <div class="retoots_help"><p>Leave a comment by replying to <a href="{{ .Params.mastodonStatus }}">this toot on Mastodon</a>!</p></div>
-        {{ end }}
         </div>
+        {{ end }}
     </article>
 </div>
-{{ if .Params.MeetupID }}
-    {{ $js := resources.Get "js/meetup-rsvps.js" | minify | fingerprint }}
-    <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 {{ end }}
-{{ if .Params.mastodonStatus }}
-    {{ $js := resources.Get "js/retoots.js" | minify | fingerprint }}
-    <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{ define "scripts" }}
+    {{- if .Params.MeetupID }}
+        {{ $js := resources.Get "js/meetup-rsvps.js" | minify | fingerprint }}
+        <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+    {{ end -}}
+    {{- if .Params.mastodonStatus }}
+        {{ $js := resources.Get "js/retoots.js" | minify | fingerprint }}
+        <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+    {{ end -}}
 {{ end }}
-{{ partial "footer.html" }}
