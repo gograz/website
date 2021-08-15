@@ -1,1 +1,1 @@
-<li><a href="{{ .Permalink }}">{{ dateFormat "2 January 2006" .Date }}</a></li>
+<li {{ if .Params.canceled }}class="canceled"{{ end }}><a href="{{ .Permalink }}">{{ dateFormat "2 January 2006" .Date }}</a></li>

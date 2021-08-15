@@ -2,7 +2,7 @@
 <div id="content">
     <article>
         <header>
-            <h2>{{ .Title }}</h2>
+            <h2>{{ .Title }}{{ if .Params.canceled }} (Canceled!){{ end }}</h2>
         </header>
         <aside>
             {{ if .Params.location }}
