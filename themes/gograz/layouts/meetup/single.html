@@ -29,6 +29,7 @@
         <div class="content">
             {{ .Content }}
         </div>
+        {{ partial "talkidea-info.html" . }}
         <div class="webmentions-container" data-target="https://gograz.org{{ .RelPermalink}}" data-endpoint="https://gograz.org/webmentions" data-rsvp-summary="yes" data-title="Mentions from around the web..."></div>
         <script src="https://gograz.org/webmentions/ui/dist/widget.js"></script>
 
