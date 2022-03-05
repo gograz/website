@@ -28,6 +28,9 @@
         </aside>
         <div class="content">
             {{ .Content }}
+            {{ if (and .Params.MeetupID (lt now .Date)) }}
+            <p>If this sounds interesting to you and you want to attend this event, please sign up on <a href="https://www.meetup.com/Graz-Open-Source-Meetup/events/{{ .Params.MeetupID }}/">Meetup.com</a>.</p>
+            {{ end }}
         </div>
         {{ partial "talkidea-info.html" . }}
         <div class="webmentions-container" data-target="https://gograz.org{{ .RelPermalink}}" data-endpoint="https://gograz.org/webmentions" data-rsvp-summary="yes" data-title="Mentions from around the web..."></div>
