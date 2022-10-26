@@ -29,7 +29,10 @@
         <div class="content">
             {{ .Content }}
             {{ if (and .Params.MeetupID (lt now .Date)) }}
-            <p>If this sounds interesting to you and you want to attend this event, please sign up on <a href="https://www.meetup.com/Graz-Open-Source-Meetup/events/{{ .Params.MeetupID }}/">Meetup.com</a>.</p>
+            <div class="meetup__meetupcom"><p>If this sounds interesting to you and you want to attend this event, please sign up on <a href="https://www.meetup.com/Graz-Open-Source-Meetup/events/{{ .Params.MeetupID }}/">Meetup.com</a>.</p></div>
+            {{ else if .Params.MeetupID }}
+            <div class="meetup__meetupcom"><p>You can also find this event on <a href="https://www.meetup.com/Graz-Open-Source-Meetup/events/{{ .Params.MeetupID }}/">Meetup.com</a>.</p></div>
+
             {{ end }}
         </div>
         {{ partial "talkidea-info.html" . }}

@@ -286,3 +286,12 @@ a.comment__date {
 .canceled {
     text-decoration: line-through;
 }
+
+.meetup__meetupcom {
+    padding: .1rem 1rem;
+    background: #ffe9e9;
+    a {
+        color: #ff4747;
+        font-weight: bold;
+    }
+}
