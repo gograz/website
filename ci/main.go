@@ -44,7 +44,7 @@ func buildCommand(ctx context.Context, client *dagger.Client) error {
 	workdir := client.Host().Workdir()
 
 	container := client.Container().
-		From("klakegg/hugo").
+		From("klakegg/hugo:0.107.0-ext").
 		WithMountedDirectory("/src", workdir).
 		WithWorkdir("/src").
 		WithEnvVariable("HUGO_ENVIRONMENT", "production").
