@@ -29,13 +29,7 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    env:
-      HUGO_VERSION: 0.105.0
     steps:
-      - name: Install Hugo CLI
-        run: |
-          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -45,14 +39,8 @@ jobs:
         uses: actions/configure-pages@v2
       - name: Build with Hugo
         env:
-          # For maximum backward compatibility with Hugo modules
-          HUGO_ENVIRONMENT: production
-          HUGO_ENV: production
-        run: |
-          hugo \
-            --minify \
-            --buildFuture \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+          TARGET_URL: "${{ steps.pages.outputs.base_url }}/"
+        run: go run ci/main.go build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
