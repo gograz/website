@@ -22,7 +22,9 @@
             {{ if .Params.MeetupID }}
             <dl class="rsvps">
                 <dt>Who's coming?</dt>
-                <dd id="posRSVPs" data-meetup-id="{{ .Params.MeetupID }}"></dd>
+                <dd id="posRSVPs" hx-get="https://api.gograz.org/meetup/{{ .Params.MeetupID }}/rsvps" hx-trigger="load delay:1s">
+                    Loading from meetup.com...
+                </dd>
             </dl>
             {{ end }}
         </aside>
@@ -53,8 +55,7 @@
 {{ end }}
 {{ define "scripts" }}
     {{- if .Params.MeetupID }}
-        {{ $js := resources.Get "js/meetup-rsvps.js" | minify | fingerprint }}
-        <script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+        <script src="/js/htmx-1.8.5.min.js"></script>
     {{ end -}}
     {{- if .Params.mastodonStatus }}
         {{ $js := resources.Get "js/retoots.js" | minify | fingerprint }}
