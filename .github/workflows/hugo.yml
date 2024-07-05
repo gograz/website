@@ -36,7 +36,7 @@ jobs:
           submodules: recursive
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v5
       - name: Build with Hugo
         env:
           TARGET_URL: "${{ steps.pages.outputs.base_url }}/"
