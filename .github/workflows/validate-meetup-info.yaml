@@ -1,0 +1,16 @@
+on:
+  pull_request:
+    paths:
+      - "content/meetup/*.md"
+      - ".github/workflows/validate-meetup-info.yaml"
+      - ".github/actions/validate-meetup-info/**/*"
+
+jobs:
+  validate-meetup-info:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/validate-meetup-info
+        with:
+          paths: |
+            content/meetup/*.md
