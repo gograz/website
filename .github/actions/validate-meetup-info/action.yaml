@@ -10,7 +10,7 @@ runs:
   steps:
     - name: Restore binary
       id: restore-cache
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
         path: .bin/validate-meetup-info
         key: validate-meetup-info-bin-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.github/actions/validate-meetup-info/**/*') }}
@@ -35,7 +35,7 @@ runs:
 
     - name: Cache binary
       if: steps.restore-cache.outputs.cache-hit != 'true'
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
         path: .bin/validate-meetup-info
         key: validate-meetup-info-bin-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.github/actions/validate-meetup-info/**/*') }}
