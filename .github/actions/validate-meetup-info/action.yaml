@@ -20,8 +20,8 @@ runs:
       if: steps.restore-cache.outputs.cache-hit != 'true'
       with:
         check-latest: true
-        cache-dependency-path: |
-          .github/actions/validate-meetup-info/go.sum
+        # Disabled to avoid conflicts with workflow-level setup-go calls et al.
+        cache: false
         go-version-file: ".github/actions/validate-meetup-info/go.mod"
 
     - name: Build binary
