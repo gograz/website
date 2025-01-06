@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"io"
 	"io/fs"
 	"log/slog"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"time"
 
 	"github.com/machinebox/graphql"
@@ -18,20 +20,15 @@ import (
 	"go.abhg.dev/goldmark/frontmatter"
 )
 
-type MeetupInfo struct {
-	ID           string `yaml:"meetupID" toml:"meetupID"`
-	RawStartTime string `yaml:"date" toml:"date"`
-	Canceled     bool   `yaml:"canceled" toml:"canceled"`
-	Filename     string `yaml:"-" toml:"-"`
-}
-
 func main() {
 	ctx := context.Background()
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
 
 	var groupName string
+	var remoteMeetupDataCachePath string
 	flag.StringVar(&groupName, "group-name", "graz-open-source-meetup", "URL name of the meetup group")
+	flag.StringVar(&remoteMeetupDataCachePath, "remote-meetup-data-cache", ".cache/remote-meetup-data.json", "Path to store fetched Meetup.com data")
 	flag.Parse()
 
 	handler := &human.Handler{}
@@ -39,7 +36,7 @@ func main() {
 		Handler: handler.WithOutput,
 	})
 
-	localMeetupEvents := make([]MeetupInfo, 0, 10)
+	localMeetupEvents := make([]LocalMeetuData, 0, 10)
 
 	rootFS := os.DirFS(".")
 	for _, pat := range flag.Args() {
@@ -49,7 +46,7 @@ func main() {
 			os.Exit(1)
 		}
 		for _, match := range matches {
-			info, err := getMeetupInfo(rootFS, match)
+			info, err := getLocalMeetuData(rootFS, match)
 			if err != nil {
 				logger.Error("failed parse metadata", "match", match, "err", err)
 				os.Exit(1)
@@ -69,26 +66,10 @@ func main() {
 		return
 	}
 
-	remoteEvents := make(map[string]RemoteMeetupData)
-
-	pastEvents, err := fetchPastMeetupData(ctx, groupName)
+	remoteEvents, err := getRemoteMeetupData(ctx, logger, groupName, remoteMeetupDataCachePath)
 	if err != nil {
-		logger.Error("failed fetching remote events", "err", err)
+		logger.ErrorContext(ctx, "failed to retrieve remote events", "err", err)
 		os.Exit(1)
-	}
-	logger.InfoContext(ctx, "past event data retrieved", "num_events", len(pastEvents))
-	upcomingEvents, err := fetchUpcomingMeetupData(ctx, groupName)
-	if err != nil {
-		logger.Error("failed fetching remote events", "err", err)
-		os.Exit(1)
-	}
-	logger.InfoContext(ctx, "upcoming event data retrieved", "num_events", len(upcomingEvents))
-
-	for _, event := range pastEvents {
-		remoteEvents[event.ID] = event
-	}
-	for _, event := range upcomingEvents {
-		remoteEvents[event.ID] = event
 	}
 
 	var failed bool
@@ -122,7 +103,7 @@ func main() {
 	}
 }
 
-func getMeetupInfo(rootFS fs.FS, path string) (*MeetupInfo, error) {
+func getLocalMeetuData(rootFS fs.FS, path string) (*LocalMeetuData, error) {
 	raw, err := fs.ReadFile(rootFS, path)
 	if err != nil {
 		return nil, err
@@ -132,7 +113,7 @@ func getMeetupInfo(rootFS fs.FS, path string) (*MeetupInfo, error) {
 	if err := md.Convert(raw, io.Discard, parser.WithContext(pCtx)); err != nil {
 		return nil, err
 	}
-	var info MeetupInfo
+	var info LocalMeetuData
 	if err := frontmatter.Get(pCtx).Decode(&info); err != nil {
 		return nil, err
 	}
@@ -140,6 +121,13 @@ func getMeetupInfo(rootFS fs.FS, path string) (*MeetupInfo, error) {
 		return nil, nil
 	}
 	return &info, nil
+}
+
+type LocalMeetuData struct {
+	ID           string `yaml:"meetupID" toml:"meetupID"`
+	RawStartTime string `yaml:"date" toml:"date"`
+	Canceled     bool   `yaml:"canceled" toml:"canceled"`
+	Filename     string `yaml:"-" toml:"-"`
 }
 
 type RemoteMeetupData struct {
@@ -262,4 +250,70 @@ query($eventsCursor: String, $groupName: String!) {
 		cursor = resp.GroupByURLName.UpcomingEvents.PageInfo.EndCursor
 	}
 	return result, nil
+}
+
+func getRemoteMeetupData(ctx context.Context, logger *slog.Logger, groupName string, cachePath string) (map[string]RemoteMeetupData, error) {
+	remoteEvents, err := loadRemoteMeetupDataFromCache(ctx, cachePath)
+	if err != nil {
+		return nil, err
+	}
+	if remoteEvents != nil {
+		logger.InfoContext(ctx, "retrieved remote data from cache", "num_events", len(remoteEvents))
+		return remoteEvents, nil
+	}
+	remoteEvents = make(map[string]RemoteMeetupData)
+
+	pastEvents, err := fetchPastMeetupData(ctx, groupName)
+	if err != nil {
+		return nil, err
+	}
+	upcomingEvents, err := fetchUpcomingMeetupData(ctx, groupName)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, event := range pastEvents {
+		remoteEvents[event.ID] = event
+	}
+	for _, event := range upcomingEvents {
+		remoteEvents[event.ID] = event
+	}
+	logger.InfoContext(ctx, "remote data retrieved", "num_events", len(remoteEvents))
+	if err := saveRemoteMeetupDataToCache(ctx, cachePath, remoteEvents); err != nil {
+		logger.WarnContext(ctx, "failed to cache data", "err", err)
+	}
+	return remoteEvents, nil
+}
+
+func loadRemoteMeetupDataFromCache(ctx context.Context, cachePath string) (map[string]RemoteMeetupData, error) {
+	if cachePath == "" {
+		return nil, nil
+	}
+	fp, err := os.Open(cachePath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	defer fp.Close()
+
+	result := make(map[string]RemoteMeetupData)
+	err = json.NewDecoder(fp).Decode(&result)
+	return result, err
+}
+
+func saveRemoteMeetupDataToCache(ctx context.Context, cachePath string, data map[string]RemoteMeetupData) error {
+	if cachePath == "" {
+		return nil
+	}
+	if err := os.MkdirAll(filepath.Dir(cachePath), 0755); err != nil {
+		return err
+	}
+	fp, err := os.Create(cachePath)
+	if err != nil {
+		return err
+	}
+	defer fp.Close()
+	return json.NewEncoder(fp).Encode(data)
 }

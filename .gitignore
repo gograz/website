@@ -3,3 +3,5 @@
 public
 resources/_gen
 .envrc
+.cache
+.bin
