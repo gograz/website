@@ -42,7 +42,7 @@ jobs:
           TARGET_URL: "${{ steps.pages.outputs.base_url }}/"
         run: go run ci/main.go build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
 
